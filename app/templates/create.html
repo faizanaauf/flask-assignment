@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1 class="h3 mb-3">Add New Book</h1>
+  <form method="post" action="{{ url_for('main.create_book') }}">
+    <div class="mb-3">
+      <label class="form-label" for="title">Title</label>
+      <input type="text" class="form-control" id="title" name="title" value="{{ form_data.title or '' }}" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="author">Author</label>
+      <input type="text" class="form-control" id="author" name="author" value="{{ form_data.author or '' }}" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="genre">Genre</label>
+      <input type="text" class="form-control" id="genre" name="genre" value="{{ form_data.genre or '' }}" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="status">Status</label>
+      <select class="form-select" id="status" name="status" required>
+        <option value="">-- Select status --</option>
+        {% for value in statuses %}
+          <option value="{{ value }}" {% if form_data.status == value %}selected{% endif %}>{{ value }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="rating">Rating</label>
+      <input type="number" class="form-control" id="rating" name="rating" min="1" max="5" value="{{ form_data.rating or '' }}" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="published_year">Published Year</label>
+      <input type="text" class="form-control" id="published_year" name="published_year" value="{{ form_data.published_year or '' }}">
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="notes">Notes</label>
+      <textarea class="form-control" id="notes" name="notes" rows="3">{{ form_data.notes or '' }}</textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Save Book</button>
+    <a class="btn btn-secondary" href="{{ url_for('main.index') }}">Cancel</a>
+  </form>
+{% endblock %}

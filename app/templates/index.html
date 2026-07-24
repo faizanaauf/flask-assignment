@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+      <h1 class="h3">My Library</h1>
+      {% if selected_genre %}
+        <p class="text-muted">Filtered by genre: <strong>{{ selected_genre }}</strong></p>
+      {% endif %}
+    </div>
+    <a class="btn btn-success" href="{{ url_for('main.create_book') }}">Add New Book</a>
+  </div>
+
+  <div class="card mb-4">
+    <div class="card-body">
+      <form method="post" action="{{ url_for('main.set_filter') }}" class="row g-3 align-items-end">
+        <div class="col-md-6">
+          <label class="form-label" for="genre">Genre filter</label>
+          <select class="form-select" id="genre" name="genre">
+            <option value="">-- Select genre --</option>
+            {% for genre in genres %}
+              <option value="{{ genre }}" {% if genre == selected_genre %}selected{% endif %}>{{ genre }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-auto">
+          <button type="submit" class="btn btn-primary">Apply</button>
+          <button type="submit" class="btn btn-outline-secondary" name="genre" value="">Clear</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  {% if books %}
+    <div class="table-responsive">
+      <table class="table table-striped align-middle">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Genre</th>
+            <th>Status</th>
+            <th>Rating</th>
+            <th>Published Year</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for book in books %}
+            <tr>
+              <td>{{ book.title }}</td>
+              <td>{{ book.author }}</td>
+              <td>{{ book.genre }}</td>
+              <td>{{ book.status }}</td>
+              <td>{{ book.rating }}</td>
+              <td>{{ book.published_year or '-' }}</td>
+              <td>
+                <a class="btn btn-sm btn-outline-primary" href="{{ url_for('main.edit_book', book_id=book.id) }}">Edit</a>
+                <form method="post" action="{{ url_for('main.delete_book', book_id=book.id) }}" class="d-inline">
+                  <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete this book?');">Delete</button>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <div class="alert alert-info">No books found. Add a book to start tracking.</div>
+  {% endif %}
+{% endblock %}
