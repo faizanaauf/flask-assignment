@@ -55,10 +55,12 @@
               <td>{{ book.rating }}</td>
               <td>{{ book.published_year or '-' }}</td>
               <td>
-                <a class="btn btn-sm btn-outline-primary" href="{{ url_for('main.edit_book', book_id=book.id) }}">Edit</a>
-                <form method="post" action="{{ url_for('main.delete_book', book_id=book.id) }}" class="d-inline">
-                  <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete this book?');">Delete</button>
-                </form>
+                <div class="d-flex flex-wrap gap-2 align-items-center action-buttons">
+                  <a class="btn btn-sm btn-outline-primary" href="{{ url_for('main.edit_book', book_id=book.id) }}">Edit</a>
+                  <form method="post" action="{{ url_for('main.delete_book', book_id=book.id) }}" class="m-0">
+                    <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete this book?');">Delete</button>
+                  </form>
+                </div>
               </td>
             </tr>
           {% endfor %}

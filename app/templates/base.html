@@ -275,10 +275,23 @@
         background: transparent !important;
       }
 
-      .table form.d-inline { display: inline-block; margin: 0; }
+      .table td .action-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        align-items: center;
+      }
 
-      /* Fix the delete confirmation button style so it doesn't float weirdly */
-      .table form.d-inline button {
+      .table td .action-buttons form {
+        margin: 0;
+      }
+
+      .table td .action-buttons .btn {
+        min-width: 64px;
+        white-space: nowrap;
+      }
+
+      .table td .action-buttons button {
         vertical-align: middle;
       }
 
